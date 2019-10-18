@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es6",
+    "strict": true,
+    "noImplicitAny": true,
+    "outDir": "./build/"
+    //"outFile": "build/tsc.js"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

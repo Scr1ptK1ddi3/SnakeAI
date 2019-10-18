@@ -1,0 +1,45 @@
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table td {
+    padding: 0;
+}
+
+#planeTable td div {
+    height: 100%;
+    border: 1px solid;
+}
+
+span {
+    font-size: 10px;
+}
+
+span[name='position'] {
+    text-align: center;
+    vertical-align: center;
+    color: #FFFFFF;
+}
+
+span[name='snakeIndex'] {
+    color: #FFFFFF;
+}
+
+.fruitElement {
+    background-color: #FF0000;
+    border-color: white !important;
+}
+
+.blankElement {
+    background-color: rgb(32,32,32);
+}
+
+.snakeHead {
+    background-color: #000000;
+    border-color: white !important;
+}
+.snakeElement {
+    background-color: #008000;
+    border-color: white !important;
+}

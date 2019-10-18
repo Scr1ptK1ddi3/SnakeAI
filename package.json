@@ -1,0 +1,24 @@
+{
+  "name": "BaseSnake",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "requirejs": "^2.3.6"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.3.31",
+    "typescript": "^3.6.3"
+  }
+}

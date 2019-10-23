@@ -1,11 +1,12 @@
-import {Position} from "../plane/Position";
+import {Position}      from "../plane/Position";
 import {SnakesElement} from "./SnakesElement";
-import {Snake} from "./Snake";
-import {Direction} from "../plane/Direction";
+import {Snake}         from "./Snake";
+import {Direction}     from "../plane/Direction";
 
 export class SnakesHead extends SnakesElement {
     private _direction: Direction;
-    constructor(position: Position, snake: Snake, direction: Direction) {
+
+    constructor (position: Position, snake: Snake, direction: Direction) {
         super(position, snake);
         this._direction = direction;
     }
@@ -18,7 +19,9 @@ export class SnakesHead extends SnakesElement {
         this._direction = value;
     }
 
-    move(): void {
+    move (): void {
         this.position = this._direction.calculateNewPosition(this.position);
     }
+
+    toString = () => `SnakeHead {direction: ${this.direction}}`;
 }

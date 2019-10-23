@@ -1,5 +1,5 @@
-import {Position} from "../plane/Position";
-import {Snake} from "./Snake";
+import {Position}  from "../plane/Position";
+import {Snake}     from "./Snake";
 import {Direction} from "../plane/Direction";
 
 export class SnakesElement {
@@ -8,7 +8,7 @@ export class SnakesElement {
 
     constructor (position: Position, snake: Snake) {
         this._position = position;
-        this._snake = snake;
+        this._snake    = snake;
     }
 
     set position (value: Position) {
@@ -23,7 +23,7 @@ export class SnakesElement {
         return Direction.calculateDirection(this._position, this._snake.getPreviousSnakeElementForElement(this)._position);
     }
 
-    move(): void {
+    move (): void {
         this._position = this.direction.calculateNewPosition(this._position);
     }
 

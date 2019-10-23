@@ -1,32 +1,39 @@
-import {Snake} from "../snake/Snake";
+import {Snake}        from "../snake/Snake";
 import {PlaneElement} from "../plane/PlaneElement";
-import * as $ from "jquery";
+import * as $         from "jquery";
 
 export class DisplayElementController {
     private readonly _$div: JQuery<HTMLElement>;
     private readonly _planeElement: PlaneElement;
 
-    constructor($div: JQuery<HTMLElement>, planeElement: PlaneElement) {
-        this._$div = $div;
+    constructor ($div: JQuery<HTMLElement>, planeElement: PlaneElement) {
+        this._$div         = $div;
         this._planeElement = planeElement;
     }
 
-    drawState(snake: any): void {
+    drawState (snake: any): void {
         this._$div.removeAttr("class");
-        if(this._planeElement.isSnake())  {
+        if (this._planeElement.isSnake()) {
             const snakeElementForPlaneElement = snake.getSnakeElementForPosition(this._planeElement.position);
             $("span[name='snakeIndex']", this._$div).text(snake.snakesElements.indexOf(snakeElementForPlaneElement));
-            if(snake && this._planeElement.position.equals((<Snake>snake).head.position)) {
-                this._$div.addClass("snakeHead")
-            } else this._$div.addClass("snakeElement");
-        } else $("span[name='snakeIndex']", this._$div).text(-1);
-        if(this._planeElement.isFruit()) this._$div.addClass("fruitElement");
-        if(this._planeElement.isBlank()) this._$div.addClass("blankElement");
+            if (snake && this._planeElement.position.equals((<Snake>snake).head.position)) {
+                this._$div.addClass("snakeHead");
+            } else {
+                this._$div.addClass("snakeElement");
+            }
+        } else {
+            $("span[name='snakeIndex']", this._$div).text(-1);
+        }
+        if (this._planeElement.isFruit()) this._$div.addClass("fruitElement");
+        if (this._planeElement.isBlank()) this._$div.addClass("blankElement");
     }
 
-    set debug(value: boolean) {
-        if(value) this.insertDebugInfo();
-        else this.clearDebugInfo();
+    set debug (value: boolean) {
+        if (value) {
+            this.insertDebugInfo();
+        } else {
+            this.clearDebugInfo();
+        }
     }
 
     private insertDebugInfo = () => this._$div.html(

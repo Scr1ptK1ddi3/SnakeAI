@@ -1,8 +1,8 @@
-import * as $ from "jquery";
-import {Plane} from "../plane/Plane";
-import {PlaneElement} from "../plane/PlaneElement";
-import {Position} from "../plane/Position";
-import {Snake} from "../snake/Snake";
+import * as $                     from "jquery";
+import {Plane}                    from "../plane/Plane";
+import {PlaneElement}             from "../plane/PlaneElement";
+import {Position}                 from "../plane/Position";
+import {Snake}                    from "../snake/Snake";
 import {DisplayElementController} from "./DisplayElementController";
 
 export class DisplayController {

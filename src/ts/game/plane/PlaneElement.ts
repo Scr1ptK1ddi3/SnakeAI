@@ -10,7 +10,7 @@ export class PlaneElement {
     private readonly _position: Position;
     private _state: number = 0;
 
-    constructor(position: Position) {
+    constructor (position: Position) {
         this._position = position;
     }
 
@@ -27,9 +27,9 @@ export class PlaneElement {
     }
 
     setFruit = (): number => this._state = State.fruit;
-    isFruit = (): boolean => this._state === State.fruit;
+    isFruit  = (): boolean => this._state === State.fruit;
     setBlank = (): number => this._state = State.blank;
-    isBlank = (): boolean => this._state === State.blank;
+    isBlank  = (): boolean => this._state === State.blank;
     setSnake = (): number => this._state = State.snake;
-    isSnake = (): boolean => this._state === State.snake;
+    isSnake  = (): boolean => this._state === State.snake;
 }

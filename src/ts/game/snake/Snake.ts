@@ -1,9 +1,9 @@
-import {Plane} from "./plane/Plane";
-import {Position} from "./plane/Position";
+import {Plane} from "../plane/Plane";
+import {Position} from "../plane/Position";
 import {SnakesElement} from "./SnakesElement";
-import {GameEngine} from "./GameEngine";
+import {GameEngine} from "../GameEngine";
 import {SnakesHead} from "./SnakesHead";
-import {Direction, DirectionValue} from "./plane/Direction";
+import {Direction, DirectionValue} from "../plane/Direction";
 
 export class Snake {
     private readonly _snakesElements: Array<SnakesElement> = [];
@@ -13,11 +13,7 @@ export class Snake {
         this._plane = plane;
         const randomHeadPosition: Position = GameEngine.getRandomMidPosition(this._plane);
         this._snakesElements.push(new SnakesHead(randomHeadPosition, this, new Direction(GameEngine.randomInt(0, 3))));
-        let snakesElementsToAdd: number = snakeLength;
-        if(this.head.direction.value === DirectionValue.Down || this.head.direction.value === DirectionValue.Up) {
-
-        }
-        for (let i = 1; i < snakesElementsToAdd; i++) {
+        for (let i = 1; i < snakeLength; i++) {
             this.addNewSnakeElement();
         }
     }
@@ -62,6 +58,7 @@ export class Snake {
         if(lastElement.direction.value === DirectionValue.Right) newSnakeElement = new SnakesElement(new Position(lastElement.position.x - 1, lastElement.position.y), this);
         if(lastElement.direction.value === DirectionValue.Down) newSnakeElement = new SnakesElement(new Position(lastElement.position.x, lastElement.position.y - 1), this);
         if(lastElement.direction.value === DirectionValue.Left) newSnakeElement = new SnakesElement(new Position(lastElement.position.x + 1, lastElement.position.y), this);
+
 
         this._snakesElements.push(newSnakeElement);
     }

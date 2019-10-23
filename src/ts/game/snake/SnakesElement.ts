@@ -1,6 +1,6 @@
-import {Position} from "./plane/Position";
+import {Position} from "../plane/Position";
 import {Snake} from "./Snake";
-import {Direction} from "./plane/Direction";
+import {Direction} from "../plane/Direction";
 
 export class SnakesElement {
     private readonly _snake: Snake;

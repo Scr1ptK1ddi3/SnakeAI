@@ -5,5 +5,5 @@ require(["build/GameEngine"], (GameEngineModule) => {
 });
 
 function init() {
-    gameEngine = new GameEngine(15, 15, 5, $("#planeTable")[0], 20, true);
+    gameEngine = GameEngine.newDisplayInstance($("#planeTable")[0], 15, 15, 5, 20, true);
 }

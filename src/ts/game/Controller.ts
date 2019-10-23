@@ -1,4 +1,4 @@
-import {SnakesHead} from "./SnakesHead";
+import {SnakesHead} from "./snake/SnakesHead";
 import {Direction} from "./plane/Direction";
 
 export abstract class Controller {

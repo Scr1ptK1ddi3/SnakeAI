@@ -15,7 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "jquery": "^3.4.1",
-    "requirejs": "^2.3.6"
+    "requirejs": "^2.3.6",
+    "systemjs": "^0.21.5"
   },
   "devDependencies": {
     "@types/jquery": "^3.3.31",

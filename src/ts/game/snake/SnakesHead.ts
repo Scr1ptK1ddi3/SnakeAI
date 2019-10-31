@@ -23,5 +23,5 @@ export class SnakesHead extends SnakesElement {
         this.position = this._direction.calculateNewPosition(this.position);
     }
 
-    toString = () => `SnakeHead {direction: ${this.direction}}`;
+    toString = (): string => `SnakeHead {direction: ${this.direction}}`;
 }

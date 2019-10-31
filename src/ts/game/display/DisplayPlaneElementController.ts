@@ -1,17 +1,25 @@
-import {Snake}        from "../snake/Snake";
 import {PlaneElement} from "../plane/PlaneElement";
-import * as $         from "jquery";
+import {Snake}        from "../snake/Snake";
 
-export class DisplayElementController {
+export class DisplayPlaneElementController {
     private readonly _$div: JQuery<HTMLElement>;
     private readonly _planeElement: PlaneElement;
 
     constructor ($div: JQuery<HTMLElement>, planeElement: PlaneElement) {
-        this._$div         = $div;
+        this._$div = $div;
         this._planeElement = planeElement;
     }
 
+    set debug (value: boolean) {
+        if (value) {
+            this.insertDebugInfo();
+        } else {
+            this.clearDebugInfo();
+        }
+    }
+
     drawState (snake: any): void {
+        console.log(this._planeElement.isBlank());
         this._$div.removeAttr("class");
         if (this._planeElement.isSnake()) {
             const snakeElementForPlaneElement = snake.getSnakeElementForPosition(this._planeElement.position);
@@ -26,14 +34,6 @@ export class DisplayElementController {
         }
         if (this._planeElement.isFruit()) this._$div.addClass("fruitElement");
         if (this._planeElement.isBlank()) this._$div.addClass("blankElement");
-    }
-
-    set debug (value: boolean) {
-        if (value) {
-            this.insertDebugInfo();
-        } else {
-            this.clearDebugInfo();
-        }
     }
 
     private insertDebugInfo = () => this._$div.html(

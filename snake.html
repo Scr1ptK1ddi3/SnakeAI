@@ -4,13 +4,23 @@
 <meta charset="UTF-8">
 <title>Snake base</title>
 <link rel="stylesheet" type="text/css" href="src/css/snake.css">
-<script src="src/js/common/require.js"></script>
-<script src="src/js/common/jquery-3.3.1.min.js"></script>
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/requirejs/require.js"></script>
 <script src="src/js/main.js"></script>
 </head>
 <body>
-    <div id="plane">
-        <table id="planeTable" class="planeTable"></table>
+    <div id="gameDiv">
+        <div id="planeDiv">
+            <table id="planeTable" class="planeTable"></table>
+        </div>
+        <div id="snakeDetailsDiv" class="snakeDetailsDiv">
+            <table>
+                <tr>
+                    <td><label>Head direction</label></td>
+                    <td><span id="headDirection"/></td>
+                </tr>
+            </table>
+        </div>
     </div>
 </body>
 </html>

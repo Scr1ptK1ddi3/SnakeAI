@@ -1,3 +1,4 @@
+import {Fruit}        from "../fruit/Fruit";
 import {Position}     from "./Position";
 import {PlaneElement} from "./PlaneElement";
 import {Snake}        from "../snake/Snake";
@@ -21,9 +22,8 @@ export class Plane {
     computePlaneElementArrayIndex = (position: Position): number => position.x + position.y * this._yLength;
     getPlaneElementForPosition    = (position: Position): PlaneElement => this._planeElements[this.computePlaneElementArrayIndex(position)];
 
-    update (snake: Snake, fruit: PlaneElement): void {
+    update (snake: Snake): void {
         this.clearStates();
-        fruit.setFruit();
         for (let snakeElement of snake.snakesElements) {
             let snakeElementPosition: Position = snakeElement.position;
             this._planeElements[this.computePlaneElementArrayIndex(snakeElementPosition)].setSnake();
@@ -32,7 +32,7 @@ export class Plane {
 
     private clearStates (): void {
         for (let planeElement of this._planeElements) {
-            planeElement.setBlank();
+            if(planeElement.isSnake()) planeElement.setBlank();
         }
     }
 

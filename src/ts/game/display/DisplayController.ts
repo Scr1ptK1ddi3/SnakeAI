@@ -1,34 +1,39 @@
-import * as $                     from "jquery";
-import {Plane}                    from "../plane/Plane";
-import {PlaneElement}             from "../plane/PlaneElement";
-import {Position}                 from "../plane/Position";
-import {Snake}                    from "../snake/Snake";
-import {DisplayElementController} from "./DisplayElementController";
+import {Fruit}                         from "../fruit/Fruit";
+import {Direction}                     from "../plane/Direction";
+import {Plane}                         from "../plane/Plane";
+import {PlaneElement}                  from "../plane/PlaneElement";
+import {Position}                      from "../plane/Position";
+import {Snake}                         from "../snake/Snake";
+import {DisplayPlaneElementController} from "./DisplayPlaneElementController";
 
 export class DisplayController {
+    private readonly _gameDiv: HTMLDivElement
     private readonly _planeElementTable: HTMLTableElement;
+    private readonly _snakeDetailsDiv: HTMLDivElement;
     private readonly _planeElementSquareLength: number;
     private readonly _plane: Plane;
-    private readonly _displayElementsControllers: DisplayElementController[];
+    private readonly _displayElementsControllers: DisplayPlaneElementController[];
     private _debugInfo: boolean = false;
 
-    static newInstance(planeElementTable: HTMLTableElement, xLength: number, yLength: number, planeElementSquareLength: number, debugInfo: boolean) {
-        return new DisplayController(planeElementTable, new Plane(xLength, yLength), planeElementSquareLength, debugInfo);
+    public static newInstance(gameDiv: HTMLDivElement, xLength: number, yLength: number, planeElementSquareLength: number, debugInfo: boolean) {
+        return new DisplayController(gameDiv, new Plane(xLength, yLength), planeElementSquareLength, debugInfo);
     }
 
-    static displayInstance(planeElementTable: HTMLTableElement, plane: Plane, planeElementSquareLength: number, debugInfo: boolean) {
-        return new DisplayController(planeElementTable, plane, planeElementSquareLength, debugInfo);
+    public static displayInstance(gameDiv: HTMLDivElement, plane: Plane, planeElementSquareLength: number, debugInfo: boolean) {
+        return new DisplayController(gameDiv, plane, planeElementSquareLength, debugInfo);
     }
 
-    private constructor(planeElementTable: HTMLTableElement, plane: Plane, planeElementSquareLength: number, debugInfo: boolean) {
+    private constructor(gameDiv: HTMLDivElement, plane: Plane, planeElementSquareLength: number, debugInfo: boolean) {
+        this._gameDiv = gameDiv;
         this._plane = plane;
-        this._planeElementTable = planeElementTable;
+        this._planeElementTable = <HTMLTableElement>$("#planeTable", this._gameDiv)[0];
+        this._snakeDetailsDiv = <HTMLDivElement>$("#snakeDetailsDiv", this._gameDiv)[0];
         this._planeElementSquareLength = planeElementSquareLength;
         this._displayElementsControllers = this.createDisplay();
         this.debugInfo = debugInfo;
     }
 
-    set debugInfo (value: boolean) {
+    public set debugInfo (value: boolean) {
         this._debugInfo = value;
         this._displayElementsControllers.forEach((value => value.debug = this._debugInfo));
         let squareLength: number = this._planeElementSquareLength;
@@ -36,17 +41,19 @@ export class DisplayController {
         $("td", this._planeElementTable).css({height: squareLength + "px", width: squareLength + "px"});
     }
 
-    update(snake: Snake, fruit: PlaneElement): void {
-        this._plane.update(snake, fruit);
+    public update(snake: Snake): void {
+        this._plane.update(snake);
         this._displayElementsControllers.forEach(value => value.drawState(snake));
     }
 
-    private createDisplay(): DisplayElementController[] {
+    public updateSnakeHeadDirectionSpan = (value: Direction) => $("#headDirection", this._snakeDetailsDiv).text(value.getString());
+
+    private createDisplay(): DisplayPlaneElementController[] {
         const $planeElementTable: JQuery<HTMLElement> = $(this._planeElementTable);
         $planeElementTable.empty();
         $planeElementTable.append("<tr/>");
 
-        const displayElementsControllers: DisplayElementController[] = [];
+        const displayElementsControllers: DisplayPlaneElementController[] = [];
         let lastPositionY: number = 0;
         for(let i = 0; i < this._plane.planeElements.length; i++) {
             const planeElement: PlaneElement = this._plane.planeElements[i];
@@ -56,7 +63,7 @@ export class DisplayController {
             const $td: JQuery<HTMLElement> = $(`<td style="height: ${this._planeElementSquareLength}px; width: ${this._planeElementSquareLength}px"/>`);
             const $div: JQuery<HTMLElement> = $("<div/>");
             $("tr:last", $planeElementTable).append($td.append($div));
-            const displayElementController: DisplayElementController = new DisplayElementController($div, planeElement);
+            const displayElementController: DisplayPlaneElementController = new DisplayPlaneElementController($div, planeElement);
             displayElementController.debug = this._debugInfo;
             displayElementsControllers.push(displayElementController);
         }

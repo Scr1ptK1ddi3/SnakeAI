@@ -17,6 +17,8 @@ export class GameEngine {
     private _displayController!: DisplayController;
     private _controller!: Controller;
 
+    private _isRunning: boolean = false;
+
     private constructor (xLength: number, yLength: number, snakeLength: number) {
         this._plane = new Plane(xLength, yLength);
         this._snake = new Snake(this._plane, snakeLength);
@@ -94,6 +96,14 @@ export class GameEngine {
     //@ts-ignore
     public humanInputControllerPostProcess(event: KeyboardEventDispatcher): void {
         this._displayController.updateSnakeHeadDirectionSpan(this._snake.head.direction);
+    }
+
+    public set debugInfo(value: boolean) {
+        this._displayController && (this._displayController.debugInfo = value);
+    }
+
+    public set isRunning(value: boolean) {
+        this._isRunning = value;
     }
 
 }

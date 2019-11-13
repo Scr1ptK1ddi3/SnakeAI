@@ -10,5 +10,5 @@ export class Fruit {
         this.planeElement.setFruit();
     }
 
-    static getNewInstance = (position: Position, plane: Plane) => new Fruit(position, plane);
+    static newInstance = (position: Position, plane: Plane) => new Fruit(position, plane);
 }

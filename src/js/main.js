@@ -5,12 +5,13 @@ require(["build/GameEngine"], (GameEngineModule) => {
 });
 
 const displayDebugInfoOnInit = false;
+let gameEngine;
 function init() {
-    controlInputHandlersInit(displayDebugInfoOnInit);
+    controlInputHandlersInit();
     cssInit();
 
-    this.gameEngine = GameEngine.newDisplayInstance($("#gameDiv")[0], 45, 45, 5, 20, displayDebugInfoOnInit);
-    this.gameEngine.initializeHumanController();
+    gameEngine = GameEngine.newDisplayInstance($("#gameDiv")[0], 45, 45, 5, 20, displayDebugInfoOnInit);
+    gameEngine.initializeHumanController();
 
     console.timeLog("main.js");
     // gameEngine.update();
@@ -21,8 +22,10 @@ function cssInit() {
     $("td > span").each((i, e) => $(e).parent().css("text-align", "left"));
 }
 
-controlInputHandlersInit = () => debugInfoCheckboxInit();
-
+controlInputHandlersInit = () => {
+    debugInfoCheckboxInit();
+    isRunningCheckboxInit();
+};
 
 let $debugInfoCheckbox;
 function debugInfoCheckboxInit() {
@@ -32,7 +35,7 @@ function debugInfoCheckboxInit() {
     $debugInfoCheckbox.on("change", handleDebugInfoCheckboxChange);
 }
 
-handleDebugInfoCheckboxChange = () => this.gameEngine.debugInfo = !!$debugInfoCheckbox.prop("checked");
+handleDebugInfoCheckboxChange = () => gameEngine.debugInfo = !!$debugInfoCheckbox.prop("checked");
 
 let $isRunningCheckbox;
 function isRunningCheckboxInit() {
@@ -41,5 +44,5 @@ function isRunningCheckboxInit() {
     $isRunningCheckbox.on("change", handleIsRunningCheckboxChange);
 }
 
-handleIsRunningCheckboxChange = () => this.gameEngine.isRunning = !!$isRunningCheckbox.prop("checked");
+handleIsRunningCheckboxChange = () => gameEngine.isRunning = !!$isRunningCheckbox.prop("checked");
 

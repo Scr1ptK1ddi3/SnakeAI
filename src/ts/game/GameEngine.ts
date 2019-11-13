@@ -18,6 +18,7 @@ export class GameEngine {
     private _controller!: Controller;
 
     private _isRunning: boolean = false;
+    private _tickTime: number = 250;
 
     private constructor (xLength: number, yLength: number, snakeLength: number) {
         this._plane = new Plane(xLength, yLength);
@@ -26,11 +27,14 @@ export class GameEngine {
     }
 
     private set fruit (position: Position) {
-        if (this._fruit) {
+        if (this._fruit && this._fruit.planeElement.isFruit()) {
             this._fruit.planeElement.setBlank();
         }
-        this._fruit = Fruit.getNewInstance(position, this._plane);
+        this._fruit = Fruit.newInstance(position, this._plane);
     }
+
+    public newFruit = (): Position => this.fruit = this.getRandomBlankPosition();
+
 
     public static getRandomPosition (plane: Plane): Position {
         const randomX = GameEngine.randomInt(1, plane.xLength - 1);
@@ -46,9 +50,8 @@ export class GameEngine {
 
     public static randomInt = (min: number = 0, max: number = 10): number => Math.floor(Math.random() * (max - min + 1)) + min;
 
-    public static newInstance (xLength: number, yLength: number, snakeLength: number): GameEngine {
-        return new GameEngine(xLength, yLength, snakeLength);
-    }
+    public static newInstance = (xLength: number, yLength: number, snakeLength: number): GameEngine => new GameEngine(xLength, yLength, snakeLength);
+
 
     public static newDisplayInstance (planeElementTable: HTMLTableElement, xLength: number, yLength: number, snakeLength: number, planeElementSquareLength: number, debugInfo: boolean): GameEngine {
         const newGameEngine: GameEngine = GameEngine.newInstance(xLength, yLength, snakeLength);
@@ -57,13 +60,13 @@ export class GameEngine {
     }
 
     public static initDisplay(gameEngine: GameEngine, planeElementTable: HTMLTableElement, planeElementSquareLength: number, debugInfo: boolean): void {
-        gameEngine._displayController = DisplayController.displayInstance(planeElementTable, gameEngine._plane, planeElementSquareLength, debugInfo);
+        gameEngine._displayController = DisplayController.displayInstance(planeElementTable, gameEngine._plane, gameEngine._snake, planeElementSquareLength, debugInfo);
         gameEngine.update();
     }
 
     public update (): void {
         if (this._displayController) {
-            this._displayController.update(this._snake);
+            this._displayController.update(this._snake, this._fruit);
             this._displayController.updateSnakeHeadDirectionSpan(this._snake.head.direction);
         } else {
             this._plane.update(this._snake)
@@ -71,9 +74,19 @@ export class GameEngine {
     }
 
     public tick (): void {
+        console.time("GameEngine.tick");
+
         if (!this._controller) return;
 
-        this._snake.move();
+        const fruitEaten = this._snake.move(this._fruit);
+        if(fruitEaten) {
+            this.newFruit();
+        }
+        this.update();
+
+        this.run();
+
+        console.timeEnd("GameEngine.tick");
     }
 
     public getRandomBlankPosition (): Position {
@@ -104,6 +117,15 @@ export class GameEngine {
 
     public set isRunning(value: boolean) {
         this._isRunning = value;
+        this.run();
     }
+
+    public set tickTime(value: number) {
+        this._tickTime = value;
+    }
+
+    private run = (): boolean | number => this._isRunning && this.tickTimeout();
+
+    private tickTimeout = (): number => window.setTimeout(() => this.tick.apply(this), this._tickTime);
 
 }

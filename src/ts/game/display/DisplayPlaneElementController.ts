@@ -19,8 +19,8 @@ export class DisplayPlaneElementController {
     }
 
     drawState (snake: any): void {
-        console.log(this._planeElement.isBlank());
         this._$div.removeAttr("class");
+        if (this._planeElement.isBlank()) this._$div.addClass("blankElement");
         if (this._planeElement.isSnake()) {
             const snakeElementForPlaneElement = snake.getSnakeElementForPosition(this._planeElement.position);
             $("span[name='snakeIndex']", this._$div).text(snake.snakesElements.indexOf(snakeElementForPlaneElement));
@@ -33,7 +33,6 @@ export class DisplayPlaneElementController {
             $("span[name='snakeIndex']", this._$div).text(-1);
         }
         if (this._planeElement.isFruit()) this._$div.addClass("fruitElement");
-        if (this._planeElement.isBlank()) this._$div.addClass("blankElement");
     }
 
     private insertDebugInfo = () => this._$div.html(
